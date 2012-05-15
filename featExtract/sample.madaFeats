@@ -1,0 +1,27 @@
+WORD	pos	cas	asp	num	per	gen	stt	normword	noanalysis	gloss
+krp	noun	n	na	s	na	f	c	krp	YES	ball;globe;sphere
+Alqdm	noun	g	na	s	na	m	d	Alqdm	YES	foot
+ryADp	noun	n	na	s	na	f	c	ryADp	YES	mathematics
+jmAEyp	adj	n	na	s	na	f	i	jmAEyp	YES	social;common;collective
+،	noun	na	na	s	na	m	na	UNK	NO	،
+yDm	verb	na	i	s	3	m	na	yDm	YES	include;comprise;incorporate
+fryq	noun	a	na	s	na	m	c	fryq	YES	team;band;group;faction;party
+krp	noun	g	na	s	na	f	c	krp	YES	ball;globe;sphere
+Alqdm	noun	g	na	s	na	m	d	Alqdm	YES	foot
+11	noun_num	u	na	s	na	m	i	88	YES	11
+lAEbA	noun	a	na	s	na	m	i	lAEbA	YES	player;athlete
+bAl<DAfp	noun	g	na	s	na	f	d	bAlADAfp	YES	addition;appending
+<lY	prep	na	na	na	na	na	na	Aly	YES	to;towards
+xmsp	noun_num	g	na	s	na	f	c	xmsp	YES	five
+lAEbyn	noun	g	na	p	na	m	i	lAEbyn	YES	player;athlete
+llAHtyAT	noun	g	na	s	na	m	d	llAHtyAT	YES	reserve_(econ.,_geol.,_milit.,_spo.)
+.	punc	na	na	na	na	na	na	.	YES	.
+
+tEtbr	verb	na	i	s	3	f	na	tEtbr	YES	be_considered;be_regarded;be_believed
+AlryADp	noun	g	na	s	na	f	d	AlryADp	YES	mathematics
+Al>kvr	adj_comp	g	na	s	na	m	d	AlAkvr	YES	more,_most,_majority
+$Ebyp	noun	g	na	s	na	f	i	$Ebyp	YES	popularity
+fy	prep	na	na	na	na	na	na	fy	YES	in
+AlEAlm	noun	g	na	s	na	m	d	AlEAlm	YES	world
+.	punc	na	na	na	na	na	na	.	YES	.
+

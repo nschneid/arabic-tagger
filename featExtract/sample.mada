@@ -1,0 +1,110 @@
+;; MADA OUTPUT FILE  -- VERSION 3.1  --- File created on Thu Mar  3 11:43:08 AST 2011
+;; This file was produced by the command line:
+;;  perl /mal0/tools/MADA-3.1/MADA-selectMA.pl config=/data1/packages/MADA-3.1/config-files/beh.utf8input-notokan.madaconfig file=../newTestFilesMada/Football.cleaned.txt.sent.bw.ma 
+;;CLASSIFIERS CONSIDERED: (asp) (cas) (enc0) (gen) (mod) (num) (per) (pos) (prc0) (prc1) (prc2) (prc3) (stt) (vox)  
+;;OPTIONS:  (Tie Breaking is arbitrary) (Print_Analyses is stars) 
+;;Feature Weights:  asp = 0.0374588  cas = 1.11344  enc0 = 1.14823  featsetprob = 12.1301  gen = 1.02833  mod = 1.10554  ngramdiac = 0.626436  ngramlex = 1.00998  notbackoff = 2.49999  num = 1.31008  partenc0 = 0.856252  partprc0 = 1.17501  partprc1 = 1.1553  partprc2 = 1.14064  partprc3 = 1.07678  per = 1.08064  pos = 1.02607  prc0 = 2.27208  prc1 = 1.15673  prc2 = 2.03792  prc3 = 4.50757  spellmatch = 1.81239  stt = 1.16685  vox = 0.343867  
+;;==========================================
+;;; SENTENCE krp Alqdm ryADp jmAEyp ، yDm fryq krp Alqdm 11 lAEbA bAl<DAfp <lY xmsp lAEbyn llAHtyAT .
+;;WORD krp
+;;MADA: krp asp:na cas:n enc0:0 gen:f mod:na num:s per:na pos:noun prc0:0 prc1:0 prc2:0 prc3:0 stt:c vox:na
+*0.980948 diac:kurapu lex:kurap_1 bw:+kur/NOUN+ap/NSUFF_FEM_SG+u/CASE_DEF_NOM gloss:ball;globe;sphere pos:noun prc3:0 prc2:0 prc1:0 prc0:0 per:na asp:na vox:na mod:na gen:f num:s stt:c cas:n enc0:0 rat:y source:lex stem:kur stemcat:NapAt
+--------------
+;;WORD Alqdm
+;;MADA: Alqdm asp:na cas:g enc0:0 gen:m mod:na num:s per:na pos:noun prc0:Al_det prc1:0 prc2:0 prc3:0 stt:d vox:na
+*1.019825 diac:Alqadami lex:qadam_1 bw:Al/DET+qadam/NOUN+i/CASE_DEF_GEN gloss:foot pos:noun prc3:0 prc2:0 prc1:0 prc0:Al_det per:na asp:na vox:na mod:na gen:m num:s stt:d cas:g enc0:0 rat:y source:lex stem:qadam stemcat:Ndu
+--------------
+;;WORD ryADp
+;;MADA: ryADp asp:na cas:n enc0:0 gen:f mod:na num:s per:na pos:noun prc0:0 prc1:0 prc2:0 prc3:0 stt:c vox:na
+*0.948143 diac:riyADapu lex:riyADap_1 bw:+riyAD/NOUN+ap/NSUFF_FEM_SG+u/CASE_DEF_NOM gloss:mathematics pos:noun prc3:0 prc2:0 prc1:0 prc0:0 per:na asp:na vox:na mod:na gen:f num:s stt:c cas:n enc0:0 rat:y source:lex stem:riyAD stemcat:NapAt
+--------------
+;;WORD jmAEyp
+;;MADA: jmAEyp asp:na cas:n enc0:0 gen:f mod:na num:s per:na pos:adj prc0:0 prc1:0 prc2:0 prc3:0 stt:i vox:na
+*0.980611 diac:jamAEiy~apN lex:jamAEiy~_1 bw:+jamAEiy~/ADJ+ap/NSUFF_FEM_SG+N/CASE_INDEF_NOM gloss:social;common;collective pos:adj prc3:0 prc2:0 prc1:0 prc0:0 per:na asp:na vox:na mod:na gen:f num:s stt:i cas:n enc0:0 rat:y source:lex stem:jamAEiy~ stemcat:Nall
+--------------
+;;WORD ،
+;;NO-ANALYSIS
+;;MADA: ، asp:na cas:n enc0:0 gen:m mod:na num:s per:na pos:adj prc0:0 prc1:0 prc2:0 prc3:0 stt:i vox:na
+NO-ANALYSIS [،]
+--------------
+;;WORD yDm
+;;MADA: yDm asp:i cas:na enc0:0 gen:m mod:i num:s per:3 pos:verb prc0:0 prc1:0 prc2:0 prc3:0 stt:na vox:a
+*1.004039 diac:yaDum~u lex:Dam~-u_1 bw:ya/IV3MS+Dum~/IV+u/IVSUFF_MOOD:I gloss:include;comprise;incorporate pos:verb prc3:0 prc2:0 prc1:0 prc0:0 per:3 asp:i vox:a mod:i gen:m num:s stt:na cas:na enc0:0 rat:na source:lex stem:Dum~ stemcat:IV_Vd
+--------------
+;;WORD fryq
+;;MADA: fryq asp:na cas:a enc0:0 gen:m mod:na num:s per:na pos:noun prc0:0 prc1:0 prc2:0 prc3:0 stt:c vox:na
+*0.991191 diac:fariyqa lex:fariyq_1 bw:+fariyq/NOUN+a/CASE_DEF_ACC gloss:team;band;group;faction;party pos:noun prc3:0 prc2:0 prc1:0 prc0:0 per:na asp:na vox:na mod:na gen:m num:s stt:c cas:a enc0:0 rat:y source:lex stem:fariyq stemcat:Ndu
+--------------
+;;WORD krp
+;;MADA: krp asp:na cas:g enc0:0 gen:f mod:na num:s per:na pos:noun prc0:0 prc1:0 prc2:0 prc3:0 stt:c vox:na
+*1.005024 diac:kurapi lex:kurap_1 bw:+kur/NOUN+ap/NSUFF_FEM_SG+i/CASE_DEF_GEN gloss:ball;globe;sphere pos:noun prc3:0 prc2:0 prc1:0 prc0:0 per:na asp:na vox:na mod:na gen:f num:s stt:c cas:g enc0:0 rat:y source:lex stem:kur stemcat:NapAt
+--------------
+;;WORD Alqdm
+;;MADA: Alqdm asp:na cas:g enc0:0 gen:m mod:na num:s per:na pos:noun prc0:Al_det prc1:0 prc2:0 prc3:0 stt:d vox:na
+*1.019825 diac:Alqadami lex:qadam_1 bw:Al/DET+qadam/NOUN+i/CASE_DEF_GEN gloss:foot pos:noun prc3:0 prc2:0 prc1:0 prc0:Al_det per:na asp:na vox:na mod:na gen:m num:s stt:d cas:g enc0:0 rat:y source:lex stem:qadam stemcat:Ndu
+--------------
+;;WORD 11
+;;MADA: 88 asp:na cas:u enc0:0 gen:m mod:na num:s per:na pos:noun_num prc0:0 prc1:0 prc2:0 prc3:0 stt:i vox:na
+*1.007466 diac:11 lex:11_0 bw:11/NOUN_NUM gloss:11 pos:noun_num prc3:0 prc2:0 prc1:0 prc0:0 per:na asp:na vox:na mod:na gen:m num:s stt:i cas:u enc0:0 rat:y source:digit
+--------------
+;;WORD lAEbA
+;;MADA: lAEbA asp:na cas:a enc0:0 gen:m mod:na num:s per:na pos:noun prc0:0 prc1:0 prc2:0 prc3:0 stt:i vox:na
+*1.004716 diac:lAEibAF lex:lAEib_1 bw:+lAEib/NOUN+AF/CASE_INDEF_ACC gloss:player;athlete pos:noun prc3:0 prc2:0 prc1:0 prc0:0 per:na asp:na vox:na mod:na gen:m num:s stt:i cas:a enc0:0 rat:y source:lex stem:lAEib stemcat:Nall_L
+--------------
+;;WORD bAl<DAfp
+;;MADA: bAlADAfp asp:na cas:g enc0:0 gen:f mod:na num:s per:na pos:noun prc0:Al_det prc1:bi_prep prc2:0 prc3:0 stt:d vox:na
+*1.000444 diac:biAl<iDAfapi lex:<iDAfap_1 bw:bi/PREP+Al/DET+<iDAf/NOUN+ap/NSUFF_FEM_SG+i/CASE_DEF_GEN gloss:addition;appending pos:noun prc3:0 prc2:0 prc1:bi_prep prc0:Al_det per:na asp:na vox:na mod:na gen:f num:s stt:d cas:g enc0:0 rat:y source:lex stem:<iDAf stemcat:NapAt
+--------------
+;;WORD <lY
+;;MADA: Aly asp:na cas:na enc0:0 gen:na mod:na num:na per:na pos:prep prc0:na prc1:0 prc2:0 prc3:0 stt:na vox:na
+*1.033497 diac:<ilaY lex:<ilaY_1 bw:+<ilaY/PREP+ gloss:to;towards pos:prep prc3:0 prc2:0 prc1:0 prc0:na per:na asp:na vox:na mod:na gen:na num:na stt:na cas:na enc0:0 rat:na source:lex stem:<ilaY stemcat:FW-Wa
+--------------
+;;WORD xmsp
+;;MADA: xmsp asp:na cas:g enc0:0 gen:f mod:na num:s per:na pos:noun_num prc0:0 prc1:0 prc2:0 prc3:0 stt:c vox:na
+*0.979859 diac:xamosapi lex:xamos_1 bw:+xamos/NOUN_NUM+ap/NSUFF_FEM_SG+i/CASE_DEF_GEN gloss:five pos:noun_num prc3:0 prc2:0 prc1:0 prc0:0 per:na asp:na vox:na mod:na gen:f num:s stt:c cas:g enc0:0 rat:y source:lex stem:xamos stemcat:Nap
+--------------
+;;WORD lAEbyn
+;;MADA: lAEbyn asp:na cas:g enc0:0 gen:m mod:na num:p per:na pos:noun prc0:0 prc1:0 prc2:0 prc3:0 stt:i vox:na
+*1.000161 diac:lAEibiyna lex:lAEib_1 bw:+lAEib/NOUN+iyna/NSUFF_MASC_PL_GEN gloss:player;athlete pos:noun prc3:0 prc2:0 prc1:0 prc0:0 per:na asp:na vox:na mod:na gen:m num:p stt:i cas:g enc0:0 rat:y source:lex stem:lAEib stemcat:Nall_L
+--------------
+;;WORD llAHtyAT
+;;MADA: llAHtyAT asp:na cas:g enc0:0 gen:m mod:na num:s per:na pos:noun prc0:Al_det prc1:li_prep prc2:0 prc3:0 stt:d vox:na
+*0.981649 diac:lilAiHotiyATi lex:{iHotiyAT_1 bw:li/PREP+Al/DET+{iHotiyAT/NOUN+i/CASE_DEF_GEN gloss:reserve_(econ.,_geol.,_milit.,_spo.) pos:noun prc3:0 prc2:0 prc1:li_prep prc0:Al_det per:na asp:na vox:na mod:na gen:m num:s stt:d cas:g enc0:0 rat:y source:lex stem:{iHotiyAT stemcat:NduAt
+--------------
+;;WORD .
+;;MADA: . asp:na cas:na enc0:na gen:na mod:na num:na per:na pos:punc prc0:na prc1:na prc2:na prc3:na stt:na vox:na
+*1.045299 diac:. lex:._0 bw:./PUNC gloss:. pos:punc prc3:na prc2:na prc1:na prc0:na per:na asp:na vox:na mod:na gen:na num:na stt:na cas:na enc0:na rat:na source:punc
+--------------
+SENTENCE BREAK
+--------------
+;;; SENTENCE tEtbr AlryADp Al>kvr $Ebyp fy AlEAlm .
+;;WORD tEtbr
+;;MADA: tEtbr asp:i cas:na enc0:0 gen:f mod:i num:s per:3 pos:verb prc0:0 prc1:0 prc2:0 prc3:0 stt:na vox:p
+*1.000207 diac:tuEotabaru lex:{iEotabar_1 bw:tu/IV3FS+Eotabar/IV_PASS+u/IVSUFF_MOOD:I gloss:be_considered;be_regarded;be_believed pos:verb prc3:0 prc2:0 prc1:0 prc0:0 per:3 asp:i vox:p mod:i gen:f num:s stt:na cas:na enc0:0 rat:na source:lex stem:Eotabar stemcat:IV_Pass_yu
+--------------
+;;WORD AlryADp
+;;MADA: AlryADp asp:na cas:g enc0:0 gen:f mod:na num:s per:na pos:noun prc0:Al_det prc1:0 prc2:0 prc3:0 stt:d vox:na
+*1.007565 diac:Alr~iyADapi lex:riyADap_1 bw:Al/DET+riyAD/NOUN+ap/NSUFF_FEM_SG+i/CASE_DEF_GEN gloss:mathematics pos:noun prc3:0 prc2:0 prc1:0 prc0:Al_det per:na asp:na vox:na mod:na gen:f num:s stt:d cas:g enc0:0 rat:y source:lex stem:riyAD stemcat:NapAt
+--------------
+;;WORD Al>kvr
+;;MADA: AlAkvr asp:na cas:g enc0:0 gen:m mod:na num:s per:na pos:adj_comp prc0:Al_det prc1:0 prc2:0 prc3:0 stt:d vox:na
+*0.979851 diac:Al>akovari lex:>akovar_2 bw:Al/DET+>akovar/ADJ_COMP+i/CASE_DEF_GEN gloss:more,_most,_majority pos:adj_comp prc3:0 prc2:0 prc1:0 prc0:Al_det per:na asp:na vox:na mod:na gen:m num:s stt:d cas:g enc0:0 rat:y source:lex stem:>akovar stemcat:Nel
+--------------
+;;WORD $Ebyp
+;;MADA: $Ebyp asp:na cas:g enc0:0 gen:f mod:na num:s per:na pos:noun prc0:0 prc1:0 prc2:0 prc3:0 stt:i vox:na
+*0.969295 diac:$aEobiy~apK lex:$aEobiy~ap_1 bw:+$aEobiy~/NOUN+ap/NSUFF_FEM_SG+K/CASE_INDEF_GEN gloss:popularity pos:noun prc3:0 prc2:0 prc1:0 prc0:0 per:na asp:na vox:na mod:na gen:f num:s stt:i cas:g enc0:0 rat:y source:lex stem:$aEobiy~ stemcat:Nap
+--------------
+;;WORD fy
+;;MADA: fy asp:na cas:na enc0:0 gen:na mod:na num:na per:na pos:prep prc0:na prc1:0 prc2:0 prc3:0 stt:na vox:na
+*1.033497 diac:fiy lex:fiy_1 bw:+fiy/PREP+ gloss:in pos:prep prc3:0 prc2:0 prc1:0 prc0:na per:na asp:na vox:na mod:na gen:na num:na stt:na cas:na enc0:0 rat:na source:lex stem:fiy stemcat:FW-Wa
+--------------
+;;WORD AlEAlm
+;;MADA: AlEAlm asp:na cas:g enc0:0 gen:m mod:na num:s per:na pos:noun prc0:Al_det prc1:0 prc2:0 prc3:0 stt:d vox:na
+*1.019825 diac:AlEAlami lex:EAlam_1 bw:Al/DET+EAlam/NOUN+i/CASE_DEF_GEN gloss:world pos:noun prc3:0 prc2:0 prc1:0 prc0:Al_det per:na asp:na vox:na mod:na gen:m num:s stt:d cas:g enc0:0 rat:y source:lex stem:EAlam stemcat:Ndu
+--------------
+;;WORD .
+;;MADA: . asp:na cas:na enc0:na gen:na mod:na num:na per:na pos:punc prc0:na prc1:na prc2:na prc3:na stt:na vox:na
+*1.045299 diac:. lex:._0 bw:./PUNC gloss:. pos:punc prc3:na prc2:na prc1:na prc0:na per:na asp:na vox:na mod:na gen:na num:na stt:na cas:na enc0:na rat:na source:punc
+--------------
+SENTENCE BREAK
+--------------
