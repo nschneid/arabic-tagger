@@ -226,11 +226,11 @@ public class DiscriminativeTagger implements Serializable{
 
 
 
-	private static FlaggedOption flag(String name) {
-		return new FlaggedOption(name).setLongFlag(name);
+	private static FlaggedOption flag(String name, String help) {
+		return (FlaggedOption)new FlaggedOption(name).setLongFlag(name).setHelp(help);
 	}
-	private static Switch boolflag(String name) {
-		return new Switch(name).setLongFlag(name);
+	private static Switch boolflag(String name, String help) {
+		return (Switch)new Switch(name).setLongFlag(name).setHelp(help);
 	}
 
 
@@ -244,33 +244,29 @@ public class DiscriminativeTagger implements Serializable{
 				"DiscriminativeTagger", 
 				"Learn or predict from a discriminative tagging model",
 				new Parameter[]{
-					flag("train"),
-					boolflag("disk"),
-					flag("iters").setStringParser(JSAP.INTEGER_PARSER).setDefault("1"),
-					flag("test"),
-					boolflag("debug"),
-					flag("labels"),
-					flag("save"),
-					flag("load"),
-					flag("properties").setDefault("tagger.properties").setRequired(true),
-					boolflag("mira"),
-					boolflag("weights"),
-					flag("test-predict"),
-					flag("n-best").setStringParser(JSAP.INTEGER_PARSER).setDefault("1"),
+					flag("train", "Path to training data feature file"),
+					boolflag("disk", "Load instances from the feature file in each pass through the training data, rather than keeping the full training data in memory"),
+					flag("iters", "Number of passes through the training data").setStringParser(JSAP.INTEGER_PARSER).setDefault("1"),
+					flag("test", "Path to test data for a CoNLL-style evaluation; scores will be printed to stderr (following training, if applicable)"),
+					boolflag("debug", "Whether to save the list of feature names (.features file) prior to training, as well as an intermediate model (serialized model file and text file with feature weights) after each iteration of training"),
+					flag("labels", "List of possible labels, one label per line"),
+					flag("save", "Save path for serialized model file (training only). Associated output files (with --debug) will add a suffix to this path."),
+					flag("load", "Path to serialized model file (decoding only)"),
+					flag("properties", "Properties file with option defaults").setDefault("tagger.properties"),
+					//boolflag("mira"),
+					boolflag("weights", "Write feature weights to stdout after training"),
+					flag("test-predict", "Path to feature file on which to make predictions (following training, if applicable); predictions will be written to stdout. (Will be ignored if --test is supplied.)"),
 					
 					// formerly only allowed in properties file
-					flag("useBIO").setStringParser(JSAP.BOOLEAN_PARSER).setDefault("true"),
-					flag("useCostAug").setStringParser(JSAP.DOUBLE_PARSER).setDefault("0"),
-					flag("useClusterFeatures").setStringParser(JSAP.BOOLEAN_PARSER).setDefault("false"),
-					flag("useBigramFeatures").setStringParser(JSAP.BOOLEAN_PARSER).setDefault("false"),
-					flag("useMorphCache").setStringParser(JSAP.BOOLEAN_PARSER).setDefault("true"),
-					flag("usePrevLabel").setStringParser(JSAP.BOOLEAN_PARSER).setDefault("true"),
+					flag("useBIO", "Constrain label bigrams in decoding such that the 'O' label is never followed by a label beginning with 'I'").setStringParser(JSAP.BOOLEAN_PARSER).setDefault("true"),
+					flag("useCostAug", "Value of cost penalty for errors against recall (for recall-oriented learning)").setStringParser(JSAP.DOUBLE_PARSER).setDefault("0"),
+					flag("usePrevLabel", "Include a first-order (label bigram) feature").setStringParser(JSAP.BOOLEAN_PARSER).setDefault("true"),
 					
 					// formerly: "useFeatureNumber"
-					flag("excludeFeatures").setDefault(""),
+					flag("excludeFeatures","Comma-separated list of (0-based) column numbers to ignore when reading feature files. (Do not specify column 0; use --no-lex instead.)").setDefault(""),
 					
-					boolflag("no-lex"),
-					boolflag("no-averaging")
+					boolflag("no-lex", "Don't include features for current and context token strings"),
+					boolflag("no-averaging", "Don't use averaging in perceptron training")
 				});
 		} catch (com.martiansoftware.jsap.JSAPException ex) {
 			ex.printStackTrace();
@@ -289,10 +285,9 @@ public class DiscriminativeTagger implements Serializable{
 		boolean developmentMode = opts.getBoolean("debug");
 		String saveFile = opts.getString("save");
 		String loadFile = opts.getString("load");
-		boolean perceptron = !opts.getBoolean("mira");
+		boolean perceptron = true || !opts.getBoolean("mira");
 		boolean printWeights = opts.getBoolean("weights");
 		String testPredictFile = opts.getString("test-predict");
-		int nBest = opts.getInt("n-best");
 		
 		_opts = opts;	// static class variable
 
@@ -339,9 +334,7 @@ public class DiscriminativeTagger implements Serializable{
 				}
 			}
 		}
-		// set the number of n-best decoding, default=1
-		t.setNBest(nBest);
-
+		
 		if(testFile != null){
 			List<LabeledSentence> data = loadData(testFile,t.getLabels(),binaryFeats,true);
 			t.setTestData(data);
@@ -1442,14 +1435,6 @@ if (nNonzero==0) throw new RuntimeException("All weights are 0.");
 		return maxIters;
 	}
 
-	public void setNBest(int nBest) {
-		this.nBest = nBest;
-	}
-
-	public int getNBest() {
-		return nBest;
-	}
-
 	public boolean isPerceptron() {
 		return perceptron;
 	}
@@ -1459,7 +1444,6 @@ if (nNonzero==0) throw new RuntimeException("All weights are 0.");
 	}
 
 	private int maxIters = 5;
-	private int nBest = 1;
 	private Iterable<LabeledSentence> trainingData;
 	private List<LabeledSentence> testData;
 
@@ -1486,7 +1470,6 @@ if (nNonzero==0) throw new RuntimeException("All weights are 0.");
 	private Random rgen;
 	private boolean developmentMode;
 	private boolean binaryFeats = false;
-	private static Properties properties;
 	private boolean perceptron = false;
 
 	static JSAPResult _opts;

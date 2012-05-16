@@ -35,21 +35,13 @@ public class ArabicFeatureExtractor {
 	private static ArabicFeatureExtractor instance;
 
 	private String[] strings = null;
-
-	private boolean useClusterFeatures;
-	private boolean useBigramFeatures;
-	private boolean useMorphCache;
+	
 	private boolean usePrevLabel;
 	private boolean unlexicalized;	// don't include features for current and context tokens
 
 	Set<Integer> excludeFeatNums = new HashSet<Integer>();
 
 	private ArabicFeatureExtractor(JSAPResult opts){
-		useClusterFeatures = opts.getBoolean("useClusterFeatures");
-
-		useBigramFeatures = opts.getBoolean("useBigramFeatures");
-
-		useMorphCache = opts.getBoolean("useMorphCache");
 		
 		usePrevLabel = opts.getBoolean("usePrevLabel");
 		
@@ -63,7 +55,16 @@ public class ArabicFeatureExtractor {
 			return;
 		}
 		for(int i=0; i<excludeFeatureNums.length; i++){
-			excludeFeatNums.add(Integer.parseInt(excludeFeatureNums[i])-1);
+			int columnNum = Integer.parseInt(excludeFeatureNums[i]);	// 0-based
+			if (columnNum==0) {
+				System.err.println("Excluding feature column 0 in --excludeFeatures is invalid; use --no-lex instead");
+				System.exit(1);
+			}
+			else if (columnNum<0) {
+				System.err.println("Feature column number in --excludeFeatures cannot be negative: "+columnNum);
+				System.exit(1);
+			}
+			excludeFeatNums.add(columnNum-1);
 		}
 	}
 
