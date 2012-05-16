@@ -16,17 +16,6 @@ public class LabeledSentence {
 	
 	final String DEFAULT_PREDICTION = "";
 	
-	public LabeledSentence(int[][] zeroOrderFeatureIndices, double[][] zeroOrderFeatureValues, List<String> labels, int[] firstOrderFeatureIndices) {
-		cached = true;
-		this.zeroOrderFeatureIndices = zeroOrderFeatureIndices;
-		this.zeroOrderFeatureValues = zeroOrderFeatureValues;
-		this.firstOrderFeatureIndices = firstOrderFeatureIndices;
-		this.trueLabels = labels;
-		this.predictions = new ArrayList<String>(zeroOrderFeatureIndices.length);
-		for (int i=0; i<zeroOrderFeatureIndices.length; i++)
-			this.predictions.add(DEFAULT_PREDICTION);
-	}
-
 	public String getArticleID() {
 		return articleID;
 	}
@@ -51,12 +40,7 @@ public class LabeledSentence {
 	private String articleID;
 	private String trainDataID;
 	private double diff; //the difference between the max score for tagging and second max score for tagging
-
-	private boolean cached = false;
-	private int[][] zeroOrderFeatureIndices;
-	private int[] firstOrderFeatureIndices;	// these are common to all tokens; indexed by previous label
-	private double[][] zeroOrderFeatureValues;
-
+	
 	public String taggedString(){
 		return taggedString(true);
 	}
@@ -168,20 +152,12 @@ public class LabeledSentence {
 		return features;
 	}
 	
-	public boolean isCached() { return cached; }
-	
-	public int[][] getZeroOrderFeatureIndices() { return zeroOrderFeatureIndices; }
-	
-	public int[] getFirstOrderFeatureIndices() { return firstOrderFeatureIndices; }
-	
-	public double[][] getZeroOrderFeatureValues() { return zeroOrderFeatureValues; }
-	
 	public List<String> getLabels() {
 		return trueLabels;
 	}
 
 	public int length(){
-		return (cached) ? zeroOrderFeatureIndices.length : tokens.size();
+		return tokens.size();
 	}
 
 	public List<String> getPredictions() {

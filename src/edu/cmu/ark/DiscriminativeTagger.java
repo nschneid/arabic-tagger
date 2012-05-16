@@ -124,139 +124,6 @@ public class DiscriminativeTagger implements Serializable{
 	}
 	
 	
-	static class FeatureCacheFileReader implements Iterator<LabeledSentence>, Iterable<LabeledSentence> {
-		File _f;
-		DataInputStream _din;
-		List<String> _lbls;
-		int[] _firstOrderFeats;	// label index -> feature index
-		int _useFirstOrder;	// 1 if actually using a first-order feature for every non-sententence-initial data point, 0 if turned off
-		boolean _allowunk;
-		int _nread;
-		LabeledSentence _nextItem;
-		
-		public FeatureCacheFileReader(File file, List<String> labelTypes) throws IOException {
-			this(file,labelTypes,false);
-		}
-		
-		public FeatureCacheFileReader(File file, List<String> labelTypes, boolean allowUnknownLabelTypes) throws IOException {
-			_f = file;
-			if (labelTypes.size()<2)
-				throw new RuntimeException("Need at least two label types: "+labelTypes);
-			_lbls = labelTypes;
-			_firstOrderFeats = null;
-			_allowunk = allowUnknownLabelTypes;
-			_useFirstOrder = (ArabicFeatureExtractor.getInstance().hasFirstOrderFeatures()) ? 1 : 0;
-			reopen();
-		}
-		
-		public void reopen() {
-			if (isOpen()) { throw new RuntimeException("Feature cache file already open"); }
-			try {
-				_din = new DataInputStream(new BufferedInputStream(new FileInputStream(_f)));
-				int nLabels = _din.readInt();
-				if (nLabels!=_lbls.size())
-					throw new RuntimeException("Unexpected number of labels (found "+nLabels+", expecting "+_lbls.size()+")");
-				_firstOrderFeats = new int[_lbls.size()];
-				for (int l=0; l<nLabels; l++)
-					_firstOrderFeats[l] = _din.readInt();	// index to first-order feature, indexed by the previous label
-				_nread = 0;
-				_nextItem = null;
-			} catch (IOException ex) {
-				ex.printStackTrace();
-				System.exit(1);
-			}
-		}
-		
-		public boolean isOpen() { return _din!=null; }
-		
-		public void close() {
-			if (_din!=null) {
-				try {
-					_din.close();
-				} catch (IOException ex) {
-					ex.printStackTrace();
-					System.exit(1);
-				}
-			}
-			_din = null;
-		}
-		
-		public boolean hasNext() {
-			if (!isOpen()) return false;
-			/*try {
-				boolean eof = !(_din.available()>0);
-				if (eof) { close(); }
-				return !eof;
-			} catch (IOException ex) {
-				ex.printStackTrace();
-				System.exit(1);
-			}
-			return false;*/
-			if (_nextItem==null)
-				_nextItem = nextItem();
-			if (_nextItem==null) {
-				close();
-				return false;
-			}
-			return true;
-		}
-		
-		// returns null after the last sentence
-		private LabeledSentence nextItem() {
-//			if (!hasNext()) { throw new RuntimeException("Unexpected EOF"); }
-			
-			// read cached data for the next sentence
-			
-			try {
-				int numTokens = _din.readInt();
-				int[][] zeroOrderFeatureIndices = new int[numTokens][];
-				double[][] zeroOrderFeatureValues = new double[numTokens][];
-				List<String> goldLabels = new ArrayList<String>(numTokens);
-				for (int i=0; i<numTokens; i++) {
-					int lblIndex = _din.readInt();
-					goldLabels.add(_lbls.get(lblIndex));
-					int numFeatures = _din.readInt();
-					zeroOrderFeatureIndices[i] = new int[numFeatures];
-					zeroOrderFeatureValues[i] = new double[numFeatures];
-					
-					for (int h=0; h<numFeatures; h++) {
-						zeroOrderFeatureIndices[i][h] = _din.readInt();
-						zeroOrderFeatureValues[i][h] = _din.readDouble();
-					}
-				}
-				
-				LabeledSentence sent = new LabeledSentence(zeroOrderFeatureIndices, zeroOrderFeatureValues, goldLabels, _firstOrderFeats);
-				
-				return sent;
-			} catch (EOFException ex) {
-				return null;
-			} catch (IOException ex) {
-				ex.printStackTrace();
-				System.exit(1);
-			}
-			return null;
-		}
-		
-		public LabeledSentence next() {
-			if (_nextItem==null)
-				hasNext();
-			_nread++;
-			LabeledSentence res = _nextItem;
-			_nextItem = null;
-			return res;
-		}
-		
-		public Iterator<LabeledSentence> iterator() {
-			// iteration always starts from scratch (allows iterating over the data multiple times)
-			if (_nread!=0)
-				reopen();
-			return this;
-		}
-		
-		public void remove() { System.err.println("FeatureCacheFileReader.remove() not supported"); }
-	}
-	
-
 	/**
 	 * 
 	 */
@@ -362,13 +229,10 @@ public class DiscriminativeTagger implements Serializable{
 				new Parameter[]{
 					flag("train"),
 					boolflag("disk"),
-					boolflag("cache"),
-					boolflag("bin"),
 					flag("iters").setStringParser(JSAP.INTEGER_PARSER).setDefault("1"),
 					flag("test"),
 					boolflag("debug"),
 					flag("labels"),
-					flag("strings"),
 					flag("save"),
 					flag("load"),
 					flag("properties").setDefault("tagger.properties").setRequired(true),
@@ -401,9 +265,8 @@ public class DiscriminativeTagger implements Serializable{
 		String trainFile = opts.getString("train");
 		String testFile = opts.getString("test");
 		String labelFile = opts.getString("labels");
-		String stringFile = opts.getString("strings");	// strings used as feature values
 		boolean loadTrainInMemory = !opts.getBoolean("disk");
-		boolean binaryFeats = opts.getBoolean("bin");
+		final boolean binaryFeats = false;
 		int maxIters = opts.getInt("iters");
 		boolean developmentMode = opts.getBoolean("debug");
 		String saveFile = opts.getString("save");
@@ -415,12 +278,6 @@ public class DiscriminativeTagger implements Serializable{
 		
 		_opts = opts;	// static class variable
 
-
-		//loadProperties(propertiesFile);
-
-		if (stringFile!=null) {
-			loadStrings(stringFile);
-		}
 
 		if(trainFile == null && loadFile == null){
 			System.err.println("Missing argument: --train or --load");
@@ -488,21 +345,6 @@ public class DiscriminativeTagger implements Serializable{
 			t.printPredictions(testPredictFile, t.getLabels(), t.getWeights());
 		}else{
 // 			t.tagStandardInput();
-		}
-	}
-
-	private static void loadStrings(String path) {
-		try {
-			BufferedReader rdr = new BufferedReader(new FileReader(path));
-			String ln;
-			List<String> stringsL = new LinkedList<String>();
-			while((ln = rdr.readLine())!=null)
-				stringsL.add(ln);
-			String[] strings = (String[])stringsL.toArray(new String[0]);
-			ArabicFeatureExtractor.getInstance().setStringVocabulary(strings);
-		} catch (IOException ex) {
-			ex.printStackTrace();
-			System.exit(1);
 		}
 	}
 
@@ -712,7 +554,6 @@ if (nNonzero==0) throw new RuntimeException("All weights are 0.");
 	 */
 	public void train(){
 		boolean averaging = !_opts.getBoolean("no-averaging");
-		boolean cacheTrainingData = _opts.getBoolean("cache");
 		
 		if(trainingData == null){
 			System.err.println("training data not set.");
@@ -723,17 +564,8 @@ if (nNonzero==0) throw new RuntimeException("All weights are 0.");
 
 		createDPTables();
 		
-		
 		try {
-			DataOutputStream trainingDataCache = null;
-			final String CACHE_FILE = "train.feats.bin";
-			if (cacheTrainingData)
-				trainingDataCache = new DataOutputStream(new BufferedOutputStream(new FileOutputStream(CACHE_FILE)));
-			trainingData = createFeatures(trainingDataCache);	// this will cache the features if trainingDataCache!=null
-			if (cacheTrainingData) {
-				trainingData = new FeatureCacheFileReader(new File(CACHE_FILE), labels);
-				trainingDataCache.close();
-			}
+			trainingData = createFeatures();
 		} catch (IOException ex) {
 			ex.printStackTrace();
 			System.exit(1);
@@ -885,17 +717,13 @@ if (nNonzero==0) throw new RuntimeException("All weights are 0.");
 			// update gold label feature weights
 			
 			// - zero-order features
-			if (!sent.isCached()) {
+			{
 				int[][] relevantFeatureIndices = new int[1][];	// will contain a single array set by the feature extractor
 				featureValues = ArabicFeatureExtractor.getInstance().extractZeroOrderFeatureValues(sent, i, featureIndexes, relevantFeatureIndices, false, false);
 				relevantFeatures = relevantFeatureIndices[0];
 			}
-			else {
-				relevantFeatures = sent.getZeroOrderFeatureIndices()[i];
-				featureValues = sent.getZeroOrderFeatureValues()[i];
-			}
 			
-			if (relevantFeatures.length==0) throw new RuntimeException("No features found for this token (with"+((sent.isCached()) ? "" : "out")+" caching)");
+			if (relevantFeatures.length==0) throw new RuntimeException("No features found for this token");
 			
 			for (int h=0; h<relevantFeatures.length; h++){
 				int featIndex = getGroundedFeatureIndex(relevantFeatures[h], gold);
@@ -907,8 +735,8 @@ if (nNonzero==0) throw new RuntimeException("All weights are 0.");
 			// - first-order features
 			if (ArabicFeatureExtractor.getInstance().hasFirstOrderFeatures() && i>0) {
 				hasFirstOrderFeat = true;
-				int pgold = labels.indexOf(sent.getLabels().get(i-1));
-				int firstOrderFeat = sent.getFirstOrderFeatureIndices()[pgold];
+				int[] firstOrderFeats = ArabicFeatureExtractor.getInstance().extractFirstOrderFeatures(sent, i, featureIndexes, false, false);
+				int firstOrderFeat = firstOrderFeats[0];
 				int featIndex = getGroundedFeatureIndex(firstOrderFeat,gold);
 				// this is assumed to be a binary feature
 				currentWeights[featIndex] += 1.0;
@@ -918,14 +746,10 @@ if (nNonzero==0) throw new RuntimeException("All weights are 0.");
 			// update predicted label feature weights
 			
 			// - zero-order features
-			if (!sent.isCached()) {
+			{
 				int[][] relevantFeatureIndices = new int[1][];	// will contain a single array set by the feature extractor
 				featureValues = ArabicFeatureExtractor.getInstance().extractZeroOrderFeatureValues(sent, i, featureIndexes, relevantFeatureIndices, true, false);
 				relevantFeatures = relevantFeatureIndices[0];
-			}
-			else {
-				relevantFeatures = sent.getZeroOrderFeatureIndices()[i];
-				featureValues = sent.getZeroOrderFeatureValues()[i];
 			}
 			
 			for (int h=0; h<relevantFeatures.length; h++){
@@ -936,8 +760,8 @@ if (nNonzero==0) throw new RuntimeException("All weights are 0.");
 			
 			// - first-order features
 			if (hasFirstOrderFeat) {
-				int ppred = labels.indexOf(sent.getPredictions().get(i-1));
-				int firstOrderFeat = sent.getFirstOrderFeatureIndices()[ppred];
+				int[] firstOrderFeats = ArabicFeatureExtractor.getInstance().extractFirstOrderFeatures(sent, i, featureIndexes, true, false);
+				int firstOrderFeat = firstOrderFeats[0];
 				int featIndex = getGroundedFeatureIndex(firstOrderFeat,pred);
 				// this is assumed to be a binary feature
 				currentWeights[featIndex] -= 1.0;
@@ -1300,15 +1124,13 @@ if (nNonzero==0) throw new RuntimeException("All weights are 0.");
 	 * so we don't have to worry about null in the HashMaps
 	 * 
 	 */
-	private Iterable<LabeledSentence> createFeatures(DataOutputStream trainingDataCache) throws IOException {
-		System.err.print("instantiating "+((trainingDataCache!=null) ? "and caching " : "")+"features");
+	private Iterable<LabeledSentence> createFeatures() throws IOException {
+		System.err.print("instantiating features");
 		lastFeatureIndex = 0;
 
 		// instantiate first-order features for all possible previous labels
 		Set<Integer> firstOrderFeats = (ArabicFeatureExtractor.getInstance().hasFirstOrderFeatures()) ? new HashSet<Integer>() : null;
-		if (trainingDataCache!=null)
-			trainingDataCache.writeInt(labels.size());
-
+		
 		// create a feature for each label as the previous label, even if not using 
 		// first-order features (otherwise it will mess up the cache file format)
 		int[] _firstOrderFeats = new int[labels.size()];
@@ -1322,8 +1144,6 @@ if (nNonzero==0) throw new RuntimeException("All weights are 0.");
 				firstOrderFeats.add(featIndex);
 				_firstOrderFeats[l] = featIndex;
 			}
-			if (trainingDataCache!=null)
-				trainingDataCache.writeInt(featIndex);
 		}
 		
 //		List<LabeledSentence> trainingDataList = null;	// new LinkedList<LabeledSentence>();
@@ -1331,10 +1151,6 @@ if (nNonzero==0) throw new RuntimeException("All weights are 0.");
 		// instantiate the rest of the features
 		int nSent = 0;
 		for(LabeledSentence sent : trainingData){
-			if (trainingDataCache!=null)	// cache first-order feature indices
-				trainingDataCache.writeInt(sent.length());
-//			int[][] relevantFeatures = new int[sent.length()][];
-// 			double[][] featureValues = new double[sent.length()][];
 			for(int i=0; i<sent.length(); i++){
 				if(i>0) sent.getPredictions().set(i-1, sent.getLabels().get(i-1));
 				final boolean addNewFeatures = true;
@@ -1342,18 +1158,7 @@ if (nNonzero==0) throw new RuntimeException("All weights are 0.");
 				double[] featureVals = ArabicFeatureExtractor.getInstance().extractZeroOrderFeatureValues(sent, i, featureIndexes, relevantFeatureIndices, false, addNewFeatures);
 				
 				// extract first-order features to make sure they're indexed but don't do anything with them
-				ArabicFeatureExtractor.getInstance().extractFirstOrderFeatureValues(sent, i, featureIndexes, false, addNewFeatures);
-// 				relevantFeatures[i] = relevantFeatureIndices[0];
-// 				featureValues[i] = featureVals;
-				if (trainingDataCache!=null) {	// cache the gold label and zero-order feature indices/values
-					int gold = labels.indexOf(sent.getLabels().get(i));
-					trainingDataCache.writeInt(gold);	// gold label
-					trainingDataCache.writeInt(relevantFeatureIndices[0].length);
-					for (int h=0; h<relevantFeatureIndices[0].length; h++) {
-						trainingDataCache.writeInt(relevantFeatureIndices[0][h]);
-						trainingDataCache.writeDouble(featureVals[h]);
-					}
-				}
+				ArabicFeatureExtractor.getInstance().extractFirstOrderFeatures(sent, i, featureIndexes, false, addNewFeatures);
 			}
 			
 // 			if (trainingDataList!=null) {
@@ -1365,33 +1170,13 @@ if (nNonzero==0) throw new RuntimeException("All weights are 0.");
 		}
 
 		//now create the array of feature weights
-		boolean featureHashing=false;	// TODO: make an instance variable
-		int nWeights = (featureHashing) ? 1000000000 : labels.size()*featureIndexes.size();
+		int nWeights = labels.size()*featureIndexes.size();
 		finalWeights = new double[nWeights];
 		System.err.println(" done with "+nSent+" sentences: "+labels.size()+" labels, "+featureIndexes.size()+" lifted features, size "+finalWeights.length+" weight vector");
 		
 //		return trainingDataList;
 		return trainingData;
 	}
-
-	/*public static Properties getProperties(){
-		if(properties == null){
-			loadProperties("tagger.properties");
-		}
-		return properties;
-	}
-
-	public static Properties loadProperties(String propertiesFile){
-		properties = new Properties();
-		try{
-			properties.load(new FileInputStream(propertiesFile));
-		}catch(Exception e){
-			e.printStackTrace();
-			System.exit(0);
-		}
-
-		return properties;
-	}*/
 
 	
 	/** For use in decoding. If useBIO is true, valid bigrams include
@@ -1464,14 +1249,8 @@ if (nNonzero==0) throw new RuntimeException("All weights are 0.");
 			int[][] relevantFeatureIndices = new int[1][];
 			double[] featureValues;
 			
-			if (sent.isCached()) {
-				relevantFeatureIndices[0] = sent.getZeroOrderFeatureIndices()[i];
-				featureValues = sent.getZeroOrderFeatureValues()[i];
-			}
-			else {
-				featureValues = ArabicFeatureExtractor.getInstance().extractZeroOrderFeatureValues(sent, i, featureIndexes, relevantFeatureIndices, true, false);
-			}
-					
+			featureValues = ArabicFeatureExtractor.getInstance().extractZeroOrderFeatureValues(sent, i, featureIndexes, relevantFeatureIndices, true, false);
+								
 			//String stem = sent.getStems().get(i);
 			//String tok = sent.getTokens().get(i);
 			//String pos  = sent.getPOS().get(i);
@@ -1527,13 +1306,11 @@ if (nNonzero==0) throw new RuntimeException("All weights are 0.");
 					if (ArabicFeatureExtractor.getInstance().hasFirstOrderFeatures() && i>0) {
 						// the relevant first-order feature is assumed to have value 1
 						int findex = -1;
-						if (sent.isCached())
-							findex = sent.getFirstOrderFeatureIndices()[k];
-						else {
-							int[] findexA = ArabicFeatureExtractor.getInstance().extractFirstOrderFeatureValues(sent, i, featureIndexes, true, false);
-							if (findexA.length>0)
-								findex = findexA[0];
-						}
+						
+						int[] findexA = ArabicFeatureExtractor.getInstance().extractFirstOrderFeatures(sent, i, featureIndexes, true, false);
+						if (findexA.length>0)
+							findex = findexA[0];
+							
 						if (findex>=0)
 							score += weights[getGroundedFeatureIndex(findex, j)];
 					}

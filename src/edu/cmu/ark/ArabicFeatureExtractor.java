@@ -161,7 +161,7 @@ public class ArabicFeatureExtractor {
 		return featureVals;
 	}
 	
-	public int[] extractFirstOrderFeatureValues(LabeledSentence sent, int j, Map<String,Integer> featureIndexes, 
+	public int[] extractFirstOrderFeatures(LabeledSentence sent, int j, Map<String,Integer> featureIndexes, 
 		boolean usePredictedLabels, boolean addNewFeatures) {
 		// previous label feature (first-order); assuming just one of these for any given token
 		if(hasFirstOrderFeatures() && j>0){
