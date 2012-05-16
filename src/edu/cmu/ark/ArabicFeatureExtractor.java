@@ -40,6 +40,7 @@ public class ArabicFeatureExtractor {
 	private boolean useBigramFeatures;
 	private boolean useMorphCache;
 	private boolean usePrevLabel;
+	private boolean unlexicalized;	// don't include features for current and context tokens
 
 	Set<Integer> excludeFeatNums = new HashSet<Integer>();
 
@@ -51,6 +52,8 @@ public class ArabicFeatureExtractor {
 		useMorphCache = opts.getBoolean("useMorphCache");
 		
 		usePrevLabel = opts.getBoolean("usePrevLabel");
+		
+		unlexicalized = opts.getBoolean("no-lex");
 		
 		// formerly: "useFeatureNumber"
 		String excludeFeatures = opts.getString("excludeFeatures");
@@ -101,13 +104,14 @@ public class ArabicFeatureExtractor {
 		// numbered features from feature file input
 		List<String>[] features = sent.getFeatures();
 		
-		
-		featureMap.put("currentTok="+sent.getTokens().get(j),1.0);
-		
-		if(j>0) {
-			featureMap.put("previousTok="+sent.getTokens().get(j-1),1.0);
-			if(j>1)
-				featureMap.put("previous2Tok="+sent.getTokens().get(j-2),1.0);
+		if (!unlexicalized) {
+			featureMap.put("currentTok="+sent.getTokens().get(j),1.0);
+			
+			if(j>0) {
+				featureMap.put("previousTok="+sent.getTokens().get(j-1),1.0);
+				if(j>1)
+					featureMap.put("previous2Tok="+sent.getTokens().get(j-2),1.0);
+			}
 		}
 		
 		

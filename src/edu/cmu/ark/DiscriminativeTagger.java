@@ -269,6 +269,7 @@ public class DiscriminativeTagger implements Serializable{
 					// formerly: "useFeatureNumber"
 					flag("excludeFeatures").setDefault(""),
 					
+					boolflag("no-lex"),
 					boolflag("no-averaging")
 				});
 		} catch (com.martiansoftware.jsap.JSAPException ex) {
