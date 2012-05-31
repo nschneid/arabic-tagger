@@ -1,3 +1,7 @@
+#!/bin/bash
+
+set -eu
+
 # add MADA to the perl path
 export PERL5LIB=$PERL5LIB:$MADA_HOME
 
