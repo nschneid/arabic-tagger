@@ -8,8 +8,8 @@ For the paper and resources used, see
 
   http://www.ark.cs.cmu.edu/AQMAR/
 
-This directory contains scripts for extracting features in the manner of the 
-named entity (NE) system described in the paper. Here feature extraction is implemented 
+This directory contains scripts for extracting features on new data in the manner of 
+the named entity (NE) system described in the paper. Feature extraction is implemented 
 as a preprocessing step that must precede training or predicting with the (Java-based) 
 tagger, and requires a local installation of MADA+TOKAN (a toolkit for Arabic 
 morphological processing which can be obtained from http://www1.ccls.columbia.edu/MADA/).
