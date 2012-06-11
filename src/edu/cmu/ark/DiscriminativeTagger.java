@@ -1210,7 +1210,9 @@ if (nNonzero==0) throw new RuntimeException("All weights are 0.");
 		if(useBIO && lbl2.charAt(0) == 'I'){
 			if(lbl1==null || lbl1.equals("O"))
 				return false;	// disallow O followed by an I tag
-			if(((lbl1.length()>1)!=(lbl2.length()>1)) || !lbl1.substring(2).equals(lbl2.substring(2)))
+			if((lbl1.length()>1)!=(lbl2.length()>1))
+				return false;	// only allow "I" without class if previous tag had no class
+			if(lbl2.length()>1 && !lbl1.substring(2).equals(lbl2.substring(2)))
 				return false;	// disallow an I tag following a tag with a different class
 		}
 		return true;
