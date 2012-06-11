@@ -26,7 +26,7 @@ released in 2011 under GPL version 2 or later; the JSAP library, which we link t
 originally released by Martian Software in 2011 under the Lesser GNU Public License.)
 
 
-CONTENTS
+= CONTENTS =
 
 eval/
   README and scripts for NER evaluation.
@@ -58,10 +58,35 @@ LICENSE
 README
 VERSION
 
-TODO:
 
-describe tagger options
+= USAGE =
 
-example training command
+Extracting features for text data: See featExtract/README.txt
 
-example testing command
+Running the Arabic named entity tagger:
+
+For example, the following command will use the existing named entity model in the model/ directory:
+
+  java -Xmx8000m -XX:+UseCompressedOops -jar arabic-tagger.jar 
+  		--load model/arabic-ner-superROP200.selfROP100.ser.gz 
+		--test-predict featExtract/sample.bio.nerFeats --usePrevLabel true
+		--properties sample.properties > predictions.out
+
+Training a tagging model:
+
+Here is an example command for training a model on the sample feature-extracted data:
+
+  java -Xmx8000m -XX:+UseCompressedOops -jar arabic-tagger.jar 
+  		--save model/sample-model.ser.gz --iters 10
+		--labels featExtract/sample.labels --train featExtract/sample.nerFeats --debug --disk --weights
+		--properties sample.properties > weights.out
+
+or boundaries only:
+
+  java -Xmx8000m -XX:+UseCompressedOops -jar arabic-tagger.jar 
+  		--save model/sample-model.ser.gz --iters 10
+		--labels featExtract/bio.labels --train featExtract/sample.bio.nerFeats --debug --disk --weights
+		--properties sample.properties > weights.out
+
+For details about options, run
+  java -jar arabic-tagger.jar --help
