@@ -1,12 +1,12 @@
-كرة	ك	ة	كر	رة	كرة	كرة	0	0	0	0	0	0	3	low	noun	n	na	s	na	f	c	krp	YES	1	1	wk0	wk1	wk2	wk3	0	0	0	1	1	0	B-MISS1
-القدم	ا	م	ال	دم	الق	قدم	0	0	0	0	لق	قد	5	low	noun	g	na	s	na	m	d	Alqdm	YES	1	1	wk0	wk1	wk2	wk3	0	0	0	0	0	1	I-MIS1
+كرة	ك	ة	كر	رة	كرة	كرة	0	0	0	0	0	0	3	low	noun	n	na	s	na	f	c	krp	YES	1	1	wk0	wk1	wk2	wk3	0	0	0	1	1	0	B
+القدم	ا	م	ال	دم	الق	قدم	0	0	0	0	لق	قد	5	low	noun	g	na	s	na	m	d	Alqdm	YES	1	1	wk0	wk1	wk2	wk3	0	0	0	0	0	1	I
 رياضة	ر	ة	ري	ضة	ريا	اضة	0	0	0	0	يا	اض	5	low	noun	n	na	s	na	f	c	ryADp	YES	1	1	wk0	wk1	wk2	wk3	0	0	0	1	0	0	O
 جماعية	ج	ة	جم	ية	جما	عية	اع	ماع	اع	اعي	ما	عي	6	low	adj	n	na	s	na	f	i	jmAEyp	YES	1	1	wk0	wk1	wk2	wk3	0	0	0	0	0	0	O
 ،	،	،	،	،	،	،	0	0	0	0	0	0	1	low	noun	na	na	s	na	m	na	UNK	NO	1	0	wk0	wk1	wk2	wk3	0	0	0	0	0	0	O
 يضم	ي	م	يض	ضم	يضم	يضم	0	0	0	0	0	0	3	low	verb	na	app	s	3	m	na	yDm	YES	1	1	wk0	wk1	wk2	wk3	0	0	0	0	0	0	O
 فريق	ف	ق	فر	يق	فري	ريق	0	0	0	0	0	0	4	low	noun	a	na	s	na	m	c	fryq	YES	1	1	wk0	wk1	wk2	wk3	0	0	0	0	0	0	O
-كرة	ك	ة	كر	رة	كرة	كرة	0	0	0	0	0	0	3	low	noun	g	na	s	na	f	c	krp	YES	1	1	wk0	wk1	wk2	wk3	0	0	0	1	1	0	B-MIS1
-القدم	ا	م	ال	دم	الق	قدم	0	0	0	0	لق	قد	5	low	noun	g	na	s	na	m	d	Alqdm	YES	1	1	wk0	wk1	wk2	wk3	0	0	0	0	0	1	I-MIS1
+كرة	ك	ة	كر	رة	كرة	كرة	0	0	0	0	0	0	3	low	noun	g	na	s	na	f	c	krp	YES	1	1	wk0	wk1	wk2	wk3	0	0	0	1	1	0	B
+القدم	ا	م	ال	دم	الق	قدم	0	0	0	0	لق	قد	5	low	noun	g	na	s	na	m	d	Alqdm	YES	1	1	wk0	wk1	wk2	wk3	0	0	0	0	0	1	I
 11	1	1	11	11	11	11	0	0	0	0	0	0	2	low	noun_num	u	na	s	na	m	i	88	YES	1	0	wk0	wk1	wk2	wk3	0	0	0	0	0	0	O
 لاعبا	ل	ا	لا	با	لاع	عبا	0	0	0	0	اع	عب	5	low	noun	a	na	s	na	m	i	lAEbA	YES	1	1	wk0	wk1	wk2	wk3	0	0	0	0	0	0	O
 بالإضافة	ب	ة	با	فة	بال	افة	لإ	الإ	ضا	ضاف	ال	اف	8	low	noun	g	na	s	na	f	d	bAlADAfp	YES	1	0	wk0	wk1	wk2	wk3	0	0	0	0	0	0	O

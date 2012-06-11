@@ -1,4 +1,4 @@
-كرة	ك	ة	كر	رة	كرة	كرة	0	0	0	0	0	0	3	low	noun	n	na	s	na	f	c	krp	YES	1	1	wk0	wk1	wk2	wk3	0	0	0	1	1	0	B-MISS1
+كرة	ك	ة	كر	رة	كرة	كرة	0	0	0	0	0	0	3	low	noun	n	na	s	na	f	c	krp	YES	1	1	wk0	wk1	wk2	wk3	0	0	0	1	1	0	B-MIS1
 القدم	ا	م	ال	دم	الق	قدم	0	0	0	0	لق	قد	5	low	noun	g	na	s	na	m	d	Alqdm	YES	1	1	wk0	wk1	wk2	wk3	0	0	0	0	0	1	I-MIS1
 رياضة	ر	ة	ري	ضة	ريا	اضة	0	0	0	0	يا	اض	5	low	noun	n	na	s	na	f	c	ryADp	YES	1	1	wk0	wk1	wk2	wk3	0	0	0	1	0	0	O
 جماعية	ج	ة	جم	ية	جما	عية	اع	ماع	اع	اعي	ما	عي	6	low	adj	n	na	s	na	f	i	jmAEyp	YES	1	1	wk0	wk1	wk2	wk3	0	0	0	0	0	0	O
