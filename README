@@ -1,7 +1,8 @@
 AQMAR Arabic Tagger
 
 This package provides a sequence tagger implementation customized for Arabic features, 
-including a named entity detection model especially intended for Arabic Wikipedia.
+including a named entity detection model especially intended for Arabic Wikipedia. 
+It was trained on labeled ACE and ANER data as well as an unlabeled Wikipedia corpus.
 Learning is with the structured perceptron, optionally in a cost-augmented fashion.
 Feature extraction is handled as a preprocessing step prior to learning/decoding.
 
